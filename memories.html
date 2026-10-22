@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4a202b">
+  <title>Our Little Scrapbook | AK & Madam</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --wine: #582a38;
+      --rose: #a65368;
+      --cream: #fff7ec;
+      --paper: #f5e8d8;
+      --gold: #c5a05b;
+      --ink: #4d3337;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(ellipse at top, #a86d78, transparent 65%),
+        #4a202b;
+    }
+
+    .cover {
+      min-height: 70vh;
+      padding: 70px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--cream);
+    }
+
+    .cover-inner { max-width: 650px; }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #f1d8a5;
+      font-size: 11px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 10vw, 75px);
+      font-weight: normal;
+      margin: 25px 0 12px;
+    }
+
+    .gold { color: #f0d49a; font-style: italic; }
+
+    .cover p {
+      line-height: 1.9;
+      color: #f0dfe0;
+    }
+
+    .jump {
+      display: inline-block;
+      padding: 13px 22px;
+      margin-top: 15px;
+      border: 1px solid #e3c58c;
+      border-radius: 30px;
+      color: #ffedc6;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 850px;
+      margin: -30px auto 0;
+      padding: 0 17px 55px;
+    }
+
+    .paper {
+      position: relative;
+      padding: 28px 22px;
+      margin: 24px 0;
+      background:
+        linear-gradient(135deg, #fffaf1, #f1dfcb);
+      border-radius: 3px;
+      box-shadow: 0 12px 30px #1d091c55;
+      transform: rotate(-0.3deg);
+    }
+
+    .paper:nth-child(even) { transform: rotate(0.35deg); }
+
+    .paper::before {
+      content: "♥";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      color: #c66e7b;
+      font-size: 20px;
+    }
+
+    .section-heading {
+      text-align: center;
+      color: var(--wine);
+      font-weight: normal;
+      font-size: 30px;
+      margin: 5px 0 12px;
+    }
+
+    .hint {
+      text-align: center;
+      color: #87676a;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .chat-note {
+      margin-top: 20px;
+      padding: 18px;
+      background: #fffaf5;
+      border-left: 3px solid var(--rose);
+      border-radius: 3px 12px 12px 3px;
+      line-height: 1.8;
+    }
+
+    .chat-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--rose);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .polaroid {
+      background: #fffdf8;
+      padding: 9px 9px 17px;
+      box-shadow: 0 5px 15px #52313a20;
+      transform: rotate(-2deg);
+      min-width: 0;
+    }
+
+    .polaroid:nth-child(even) { transform: rotate(2deg); }
+
+    .photo-slot {
+      aspect-ratio: 3 / 4;
+      background: #ead8d3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+      color: #805c62;
+      font-size: 13px;
+      padding: 10px;
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .caption {
+      text-align: center;
+      font-style: italic;
+      margin-top: 12px;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .add-note {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: #fffaf5;
+      border: 1px solid #ddc8bb;
+      border-radius: 9px;
+    }
+
+    textarea.add-note {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .add-button {
+      border: none;
+      border-radius: 24px;
+      padding: 12px 18px;
+      margin-top: 12px;
+      color: white;
+      background: var(--wine);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .note-output {
+      margin-top: 18px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .ending {
+      text-align: center;
+      color: #fff1e1;
+      padding: 35px 12px;
+      line-height: 2;
+    }
+
+    .ending strong { color: #f0d49a; }
+
+    .back {
+      display: inline-block;
+      margin-top: 15px;
+      color: #ffe7b9;
+    }
+
+    @media (max-width: 420px) {
+      .photo-grid { gap: 12px; }
+      .paper { padding: 24px 17px; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .paper {
+        animation: appear .8s ease both;
+      }
+
+      @keyframes appear {
+        from { opacity: 0; transform: translateY(16px) rotate(0); }
+        to { opacity: 1; }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="cover">
+    <div class="cover-inner">
+      <div class="eyebrow">A collection of little forever moments</div>
+      <h1>Our <span class="gold">Scrapbook</span> ♡</h1>
+      <p>
+        Every conversation, every photograph, every little memory.
+        <br>
+        Collected with love by madam, for AK. 💌
+      </p>
+      <a class="jump" href="#chats">Turn the page ↓</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="paper" id="chats">
+      <h2 class="section-heading">Things You Said 💬</h2>
+      <p class="hint">
+        Some conversations end, but the feelings stay.
+      </p>
+
+      <!-- Replace these sample memories with real chat memories. -->
+      <div class="chat-note">
+        <span class="chat-label">A little beginning ♡</span>
+        <strong>One thing I never expected...</strong>
+        <p>
+          At first, I didn't expect you to stay in my life this long.
+          Now, I'm genuinely so happy to have you, AK.
+        </p>
+      </div>
+
+      <div class="chat-note">
+        <span class="chat-label">A conversation to remember</span>
+        <strong>My favourite kind of moment</strong>
+        <p>
+          Did you remember our tution days where you and me have our best days,
+          some days we wear same colour dress but it was not expected but we love to see like that.
+          And having some lovely moments when we are alone in tution days.
+        </p>
+      </div>
+
+      <div class="chat-note">
+        <span class="chat-label">From madam, with love</span>
+        <strong>What I want you to know</strong>
+        <p>
+          We have shared happiness and struggles.
+          I want to keep facing what comes next with you,
+          with patience, understanding, and the same love. ❤️
+        </p>
+      </div>
+
+      <h3 style="margin-top:30px">Add a little chat memory ✍️</h3>
+      <p class="hint">This form adds a note on this page while it is open.</p>
+
+      <input class="add-note" id="chatTitle"
+             placeholder="Memory title, e.g. Our funniest chat">
+
+      <textarea class="add-note" id="chatText"
+                placeholder="Write your favourite conversation memory..."></textarea>
+
+      <button class="add-button" onclick="addChat()">
+        Add to this page ♡
+      </button>
+
+      <div id="newChats" aria-live="polite"></div>
+    </section>
+
+    <section class="paper" id="photos">
+      <h2 class="section-heading">Our Little Moments 📸</h2>
+      <p class="hint">
+        A few spaces for photographs that mean something to us.
+      </p>
+
+      <div class="photo-grid">
+        <div class="polaroid">
+          <div class="photo-slot">
+            <img src = "photos/memories2.jpeg"
+                 alt = "heyy AK did you remember this photo in one of the winter i did some chous it is one of the pic of it.">
+          </div>
+          <div class="caption">A moment with you ♡</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-slot">
+            <img src = "photos/memories3.jpeg"
+                 alt = "The first photo i took it of you">
+          
+          </div>
+          <div class="caption">One for my heart ✨</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-slot">
+            <img src = "photos/memories4.jpeg"
+                 alt = "One of the special photo">
+          
+          </div>
+          <div class="caption">Our favourite memory</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-slot">
+            <img src = "photos/memories1.jpeg"
+                 alt = "One of our moment we always stays like that">
+          </div>
+          <div class="caption">Just us 💗</div>
+        </div>
+      </div>
+
+      <p class="hint" style="margin-top:24px">
+        Add your own photographs by following the instructions below.
+      </p>
+    </section>
+
+    <section class="paper">
+      <h2 class="section-heading">A Note for Our Future ♾</h2>
+      <p style="line-height:2">
+        AK, I know life will not always be easy. There may be more
+        happiness, more lessons, and more struggles ahead.
+        I hope we continue to listen to each other, support each other,
+        and make beautiful memories along the way.
+      </p>
+      <p style="text-align:right;font-style:italic">
+        With love, your madam ❤️
+      </p>
+    </section>
+
+    <div class="ending">
+      <div style="font-size:32px">♡ ♥ ♡</div>
+      Made slowly, saved with love.
+      <br>
+      <strong>AK & Madam</strong>
+      <br>
+      <a class="back" href="index.html">← Back to our first page</a>
+    </div>
+  </main>
+
+  <script>
+    function addChat() {
+      const title = document.getElementById("chatTitle").value.trim();
+      const story = document.getElementById("chatText").value.trim();
+
+      if (!title || !story) {
+        alert("Add both a title and your memory first 💗");
+        return;
+      }
+
+      const card = document.createElement("div");
+      card.className = "chat-note";
+
+      const label = document.createElement("span");
+      label.className = "chat-label";
+      label.textContent = "A memory from madam ♡";
+
+      const heading = document.createElement("strong");
+      heading.textContent = title;
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = story;
+
+      card.append(label, heading, paragraph);
+      document.getElementById("newChats").appendChild(card);
+
+      document.getElementById("chatTitle").value = "";
+      document.getElementById("chatText").value = "";
+    }
+  </script>
+</body>
+</html>
